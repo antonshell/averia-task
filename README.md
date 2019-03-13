@@ -1,4 +1,4 @@
-# Тестовое задание для компании Averia
+# Тестовое задание для компании Olivia
 
 Задача связана с геолокацией. Проект - умный ошейник для собак.
 Необходимо подготовить примерное описание архитектуры проекта.
@@ -66,10 +66,10 @@ http://helpform.ru/544777
 
 > отсеивать дублирующиеся пакеты (по типу пакета и timestamp)
 
-1 . **POST** api.averia.ru/trackpoint - api метод принимает на вход пакет "Трек". Получает id девайса 
+1 . **POST** api.olivia.ru/trackpoint - api метод принимает на вход пакет "Трек". Получает id девайса 
 Проверяет на дубликат, сохраняет в БД. 
 
-2 . **POST** api.averia.ru/activity -  api метод принимает на вход пакет "Активность". Получает id девайса 
+2 . **POST** api.olivia.ru/activity -  api метод принимает на вход пакет "Активность". Получает id девайса 
 Проверяет на дубликат, сохраняет в БД.
 
 - Для проверки пакета на дубликат можно использоват timestamp(не более 1 пакета в секунду).
@@ -84,7 +84,7 @@ http://helpform.ru/544777
 
 > Отдавать последнюю координату устройства
 
-**GET** api.averia.ru/device/{device_id}/last-position 
+**GET** api.olivia.ru/device/{device_id}/last-position 
 Тут все довольно просто. Выбираем записи из таблицы trackpoint либо activity. Сортировка по timestamp. 
 Выбираем самую позднюю запись.
 
@@ -92,7 +92,7 @@ http://helpform.ru/544777
 
 > отдавать текущие координаты устройств внутри определенного bounding box
 
-**POST** api.averia.ru/bounding-box/devices 
+**POST** api.olivia.ru/bounding-box/devices 
 
 Если я правильно понял задачу:
 На вход передается массив данных - координаты(3 и более). В результате по точкам строится полигон.
@@ -112,7 +112,7 @@ https://www.thutat.com/web/en/programming-and-tech-stuff/web-programming/find-if
 
 1 . Для получения общей статистики по активности получим запрос такого типа:
 
-**GET** api.averia.ru/device/{device_id}/statistics/
+**GET** api.olivia.ru/device/{device_id}/statistics/
 
 Пример SQL запроса:
 
@@ -125,7 +125,7 @@ SELECT type_id, count(*) FROM activity GROUP BY type_id
 
 2 . Чтобы получить статистику активности по треку, нужно знать timestamp начала и конца трека. По ним отфильтровать пакеты.
 
-**GET** api.averia.ru/device/{device_id}/statistics/{track_id}
+**GET** api.olivia.ru/device/{device_id}/statistics/{track_id}
 
 Пример SQL запроса:
 
@@ -139,11 +139,11 @@ SELECT type_id, count(*) FROM activity GROUP BY type_id WHERE timestamp BETWEEN 
 
 Можно получить все треки:
 
-**GET** api.averia.ru/tracks
+**GET** api.olivia.ru/tracks
 
 Либо конкретный трек:
 
-**GET** api.averia.ru/track/{track_id}
+**GET** api.olivia.ru/track/{track_id}
 
 Треки хранятся в таблице track. Хранится timestamp начала и конца, id девайса, возможно, данные трека(geojson). 
 Или путь к файлу(gpx/geojson). Возможно, дополнительная информация(прим: протяженность)
